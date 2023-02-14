@@ -1,0 +1,29 @@
+{
+  "tracks": [
+    {
+      "title": "RUDE LOSE DANCE",
+      "image": "https://lh3.googleusercontent.com/WFHh39SMpu26y7bwB3GogfZHegGZWW4ISaaAA3CiQXGjvZ1E9BLqhogZf_sCny1tg0wo7gQLaMk1ZHoF=w544-h544-l90-rj",
+      "url": "https://music.youtube.com/watch?v=8OYi7YuNHFI",
+      "sort": 1
+    },
+    {
+      "title": "カワキヲアメク",
+      "image": "https://lh3.googleusercontent.com/0ZiFfuMFWuQFB4oeClIiY_-uNfQWdXjEtQdxdb8rbBadM5Fs-QDclfcjoWKMgwHPDdRY-sfsd0nANAaFcg=w544-h544-l90-rj",
+      "url": "https://www.youtube.com/watch?v=4VR-6AS0-l4",
+      "url2": "https://music.youtube.com/watch?v=VjeoJ6I81vA",
+      "sort": 2
+    },
+    {
+      "title": "Guitar, Loneliness and Blue Planet",
+      "image": "https://lh3.googleusercontent.com/anZS46S0LoMCZNSrfUvlTIN4QBuBccvNo3fMs8AkDVQdLp3-XUmjEEoVfNfyd6u14O9Kl7El7R8niVcq1w=w544-h544-l90-rj",
+      "url": "https://music.youtube.com/watch?v=SDk1RA4g8CA",
+      "sort": 3
+    },
+    {
+      "title": "夏夢ノイジー",
+      "image": "https://lh3.googleusercontent.com/stfX0yFyCRBvsw70ZznEn1Rw60P_GatUblEI96EbAH0VnbjzYLhuN9G0BjLHo2Aq9U-I-TB-vnPrPpEk=w544-h544-l90-rj",
+      "url": "https://music.youtube.com/watch?v=b7VeYS_fxdY",
+      "sort": 4
+    }
+  ]
+}
