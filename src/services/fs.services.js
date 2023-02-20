@@ -1,5 +1,6 @@
 import { createDir, writeTextFile, readTextFile, exists } from '@tauri-apps/api/fs'
 import { join, audioDir } from '@tauri-apps/api/path'
+import debounce from 'just-debounce-it'
 
 const audioDirPath = await audioDir()
 const pomodoroDir = await join(audioDirPath, 'pomodoro-app')
@@ -15,21 +16,24 @@ export async function validatePomodoroDir () {
 }
 
 export async function saveFavorites (favorites) {
-  console.log('me guardeee')
-  await writeTextFile(favoritesFile, JSON.stringify(favorites, null, 2))
+  debounce(await writeTextFile(favoritesFile, JSON.stringify(favorites, null, 2)), 200)
 }
 
 export async function getFavorites () {
-  console.log(audioDirPath)
-  console.log(pomodoroDir)
-  console.log(favoritesFile)
   if (!await exists(favoritesFile)) {
     await createDir(pomodoroDir, { recursive: true })
     await writeTextFile(favoritesFile, '[]')
   }
 
   const favorites = await readTextFile(favoritesFile)
-  return JSON.parse(favorites)
+
+  const favoriteList = JSON.parse(favorites)
+
+  // order by sort
+
+  return favoriteList.sort((a, b) => {
+    return a.sort - b.sort
+  })
 }
 
 export async function savePlaylists (playlists) {
