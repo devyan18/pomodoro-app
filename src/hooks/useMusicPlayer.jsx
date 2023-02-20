@@ -89,6 +89,7 @@ export default function useMusicPlayer () {
     progress,
     volumen,
     track,
-    playing
+    playing,
+    duration
   }
 }

@@ -7,6 +7,8 @@ import { useMusic } from '../providers/MusicProvider'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import Drag from '../icons/Drag'
+import Options from '../icons/Options'
+import { useState } from 'react'
 
 const segToMin = (seg) => {
   const minutes = Math.floor(seg / 60)
@@ -25,13 +27,9 @@ export default function TrackItemSortable ({
   const { handleSetTrackAndPlay } = useMusic()
   const { toggleFavorite } = useFavorites()
   const { track: currentTrack, playing } = useMusic()
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition
-  } = useSortable({ id: track.id })
+  const [viewContextMenu, setViewContextMenu] = useState(false)
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: track.id })
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -48,18 +46,23 @@ export default function TrackItemSortable ({
     })
   }
 
+  const handleToggleViewContextMenu = () => {
+    setViewContextMenu((prev) => !prev)
+  }
+
   return (
     <div
       className={`track_result_item ${
         currentTrack.id === track.id ? 'current_track' : ''
       } ${rounded ? 'rounded' : ''}`}
-      ref={setNodeRef} {...attributes} style={style}
+      ref={setNodeRef}
+      {...attributes}
+      style={style}
     >
-
-      <div
-        className='track_result_item_info'
-        data-no-dnd='true'
-      >
+      <div className='track_result_item_info' data-no-dnd='true'>
+        <div className='btn_favorite' {...listeners}>
+          <Drag width='35px' height='35px' />
+        </div>
         <picture
           onClick={() => {
             handleSetTrackAndPlay(track)
@@ -87,11 +90,17 @@ export default function TrackItemSortable ({
           </div>
         </div>
       </div>
-      <div
-        className='track_result_item_actions'
-        data-no-dnd='true'
-      >
-
+      <div className='track_result_item_actions' data-no-dnd='true'>
+        <div className='btn_favorite' onClick={handleToggleViewContextMenu}>
+          <Options width='35px' height='35px' />
+          {viewContextMenu && (
+            <div className='context_menu'>
+              <div className='context_menu_item'>
+                <span>Remove from playlist</span>
+              </div>
+            </div>
+          )}
+        </div>
         {togglerFavorites
           ? (
             <div
@@ -120,11 +129,6 @@ export default function TrackItemSortable ({
               <HeartBroke width='35px' height='35px' />
             </div>
             )}
-        <div
-          className='btn_favorite'
-          {...listeners}
-        ><Drag width='35px' height='35px' />
-        </div>
       </div>
     </div>
   )

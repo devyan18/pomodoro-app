@@ -29,8 +29,6 @@ export async function getFavorites () {
 
   const favoriteList = JSON.parse(favorites)
 
-  // order by sort
-
   return favoriteList.sort((a, b) => {
     return a.sort - b.sort
   })
