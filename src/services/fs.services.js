@@ -15,10 +15,14 @@ export async function validatePomodoroDir () {
 }
 
 export async function saveFavorites (favorites) {
+  console.log('me guardeee')
   await writeTextFile(favoritesFile, JSON.stringify(favorites, null, 2))
 }
 
 export async function getFavorites () {
+  console.log(audioDirPath)
+  console.log(pomodoroDir)
+  console.log(favoritesFile)
   if (!await exists(favoritesFile)) {
     await createDir(pomodoroDir, { recursive: true })
     await writeTextFile(favoritesFile, '[]')

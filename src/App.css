@@ -322,6 +322,8 @@ button {
   border-radius: 4px;
   background-size: cover;
   transition: all .2s ease;
+  min-width: 52px;
+  min-height: 52px;
 }
 
 .track_result_item.current_track .track_result_item_banner {
@@ -376,6 +378,7 @@ button {
   color: #fff;
   font-size: 16px;
   width: 100%;
+  margin-left: 100px;
 }
 
 .search_input::placeholder {
@@ -406,6 +409,9 @@ button {
 
 .track_result_item_actions {
   padding: 0px 14px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 
 .btn_favorite {
@@ -434,6 +440,8 @@ button {
   justify-content: flex-start;
   flex-direction: column;
   overflow: hidden;
+  padding: 20px 8% 0 8%;
+  text-align: center;
 }
 
 .favorite_list {
@@ -444,9 +452,9 @@ button {
   flex-direction: column;
   max-height: 100%;
   overflow: auto;
-  padding: 0px 5%;
   gap: 10px;
   list-style: none;
+  padding: 0;
 }
 
 .searcher_loader {
@@ -472,4 +480,36 @@ button {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.rounded {
+  border-radius: 8px;
+  border: none;
+}
+
+.favorite_filter {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 100px;
+
+}
+
+.favorite_filter > input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: #0c151c;
+  color: #fff;
+  font-size: 18px;
+  padding: 0 12px;
+  height: 50px;
+}
+
+.track_result_item_title {
+  text-align: left;
+  text-overflow: ellipsis;
+  max-height: 40px;
+  overflow: hidden;
 }

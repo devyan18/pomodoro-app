@@ -4,6 +4,9 @@ import Heart from '../icons/Heart'
 import HeartBroke from '../icons/HeartBroke'
 import { confirm } from '@tauri-apps/api/dialog'
 import { useMusic } from '../providers/MusicProvider'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import Drag from '../icons/Drag'
 
 const segToMin = (seg) => {
   const minutes = Math.floor(seg / 60)
@@ -13,7 +16,7 @@ const segToMin = (seg) => {
   return `${minutes}:${seconds}`
 }
 
-export default function TrackItem ({
+export default function TrackItemSortable ({
   track,
   isFavorite,
   togglerFavorites = false,
@@ -22,6 +25,18 @@ export default function TrackItem ({
   const { handleSetTrackAndPlay } = useMusic()
   const { toggleFavorite } = useFavorites()
   const { track: currentTrack, playing } = useMusic()
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition
+  } = useSortable({ id: track.id })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition
+  }
 
   const onUnfavorite = (track) => {
     confirm(
@@ -38,13 +53,19 @@ export default function TrackItem ({
       className={`track_result_item ${
         currentTrack.id === track.id ? 'current_track' : ''
       } ${rounded ? 'rounded' : ''}`}
+      ref={setNodeRef} {...attributes} style={style}
     >
-      <div className='track_result_item_info'>
+
+      <div
+        className='track_result_item_info'
+        data-no-dnd='true'
+      >
         <picture
           onClick={() => {
             handleSetTrackAndPlay(track)
           }}
           loading='lazy'
+          data-no-dnd='true'
           className={`track_result_item_banner ${
             currentTrack.id === track.id && playing ? 'rotate' : ''
           }`}
@@ -66,7 +87,11 @@ export default function TrackItem ({
           </div>
         </div>
       </div>
-      <div className='track_result_item_actions'>
+      <div
+        className='track_result_item_actions'
+        data-no-dnd='true'
+      >
+
         {togglerFavorites
           ? (
             <div
@@ -77,23 +102,29 @@ export default function TrackItem ({
             >
               {isFavorite
                 ? (
-                  <HeartContained width='25px' height='25px' />
+                  <HeartContained width='35px' height='35px' />
                   )
                 : (
-                  <Heart width='25px' height='25px' />
+                  <Heart width='35px' height='35px' />
                   )}
             </div>
             )
           : (
             <div
               className='btn_favorite'
+              data-no-dnd='true'
               onClick={() => {
                 onUnfavorite(track)
               }}
             >
-              <HeartBroke width='25px' height='25px' />
+              <HeartBroke width='35px' height='35px' />
             </div>
             )}
+        <div
+          className='btn_favorite'
+          {...listeners}
+        ><Drag width='35px' height='35px' />
+        </div>
       </div>
     </div>
   )

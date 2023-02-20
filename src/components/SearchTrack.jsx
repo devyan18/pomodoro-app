@@ -18,17 +18,23 @@ export default function SearchTrack () {
   const [idList, setIdList] = useState([])
 
   const searcherWithDebounce = useCallback(
-    debounce((search) =>
-      getTracksFromSearch({ query: search })
-        .then((res) => {
-          searchRef.current = search
-          setResults(res)
-          saveLatestSearchResults(res)
-        })
-        .finally(() => {
-          setIsLoading(false)
-        })
-    , 500), [])
+    debounce(
+      (search) =>
+        getTracksFromSearch({ query: search })
+          .then((res) => {
+            searchRef.current = search
+            setResults(res)
+            if (!res.error) {
+              saveLatestSearchResults(res)
+            }
+          })
+          .finally(() => {
+            setIsLoading(false)
+          }),
+      1000
+    ),
+    []
+  )
 
   const handleChange = (search) => {
     setIsLoading(false)
@@ -55,7 +61,9 @@ export default function SearchTrack () {
 
   return (
     <div className='search_track'>
-      <h3>Search your <i>Youtube Music</i> Songs</h3>
+      <h3>
+        Search your <i>Youtube Music</i> Songs
+      </h3>
       <form className='search_form'>
         <input
           type='text'
@@ -63,27 +71,32 @@ export default function SearchTrack () {
           name='search'
           className='search_input'
           autoComplete='off'
+          autoCapitalize='off'
+          autoCorrect='off'
           onChange={(e) => {
             handleChange(e.target.value)
           }}
         />
-        <div className='searcher_loader'>
-          {isLoadingt && <Spinner />}
-        </div>
+        <div className='searcher_loader'>{isLoadingt && <Spinner />}</div>
       </form>
 
       <ul className='track_results_list'>
-
-        {results.length > 0 && results.map((result, index) => {
-          return (
-            <TrackItem
-              key={index}
-              track={result}
-              isFavorite={idList.includes(result.id)}
-              togglerFavorites
-            />
-          )
-        })}
+        {results.length > 0
+          ? (
+              results.map((result, index) => {
+                return (
+                  <TrackItem
+                    key={index}
+                    track={result}
+                    isFavorite={idList.includes(result.id)}
+                    togglerFavorites
+                  />
+                )
+              })
+            )
+          : (
+            <span className='no_results'>No results</span>
+            )}
       </ul>
     </div>
   )
